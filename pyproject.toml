@@ -4,7 +4,13 @@ version = "0.1.0"
 description = ""
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "keyboard>=0.13",
+    "pillow>=10.0",
+    "pyautogui>=0.9",
+    "pyqt6>=6.7",
+    "pytesseract>=0.3",
+]
 
 [project.scripts]
 clipboard-manager = "clipboard_manager.main:main"
@@ -43,6 +49,10 @@ build-backend = "hatchling.build"
 dev = [
     "mypy>=1.20.1",
     "pytest>=9.0.3",
-    "pytest-cov>=7.1.0",
+    "pytest-cov>=5.0",
     "ruff>=0.15.11",
 ]
+
+[[tool.mypy.overrides]]
+module = ["keyboard", "pyautogui", "pytesseract"]
+ignore_missing_imports = true
