@@ -28,7 +28,7 @@ class SelectionOverlay(QWidget):
         if screen is None:
             return
         self.setGeometry(screen.geometry())
-        self.showFullScreen()
+        self.show()
         self.raise_()
         self.activateWindow()
 

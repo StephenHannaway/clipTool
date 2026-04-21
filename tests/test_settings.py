@@ -10,8 +10,8 @@ def test_defaults():
     assert s.plain_text_strip is True
     assert s.start_with_windows is False
     assert s.hotkeys.picker == "ctrl+win+v"
-    assert s.hotkeys.ocr == "ctrl+win+o"
-    assert s.hotkeys.column_select == "ctrl+win+b"
+    assert s.hotkeys.ocr == "ctrl+win+shift+o"
+    assert s.hotkeys.column_select == "ctrl+win+shift+b"
 
 
 def test_save_creates_file(tmp_path: Path):
@@ -56,4 +56,4 @@ def test_hotkey_roundtrip(tmp_path: Path):
     s.save(path)
     loaded = Settings.load(path)
     assert loaded.hotkeys.picker == "ctrl+alt+v"
-    assert loaded.hotkeys.ocr == "ctrl+win+o"
+    assert loaded.hotkeys.ocr == "ctrl+win+shift+o"

@@ -1,13 +1,14 @@
 # clipboard-manager justfile
 
 set shell := ["bash", "-cu"]
+set windows-shell := ["cmd", "/c"]
 
 default:
     @just --list
 
-# Run the project
-run *args:
-    uv run python -m clipboard_manager {{ args }}
+# Start the clipboard manager
+clip:
+    uv run clipboard-manager
 
 # Run linter (ruff + mypy)
 lint:
