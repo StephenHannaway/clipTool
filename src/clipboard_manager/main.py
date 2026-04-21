@@ -5,7 +5,6 @@ from pathlib import Path
 
 from PyQt6.QtWidgets import QApplication
 
-from clipboard_manager.column_select import ColumnSelectHelper
 from clipboard_manager.history import ClipboardHistory
 from clipboard_manager.hotkeys import HotkeyManager
 from clipboard_manager.monitor import ClipboardMonitor
@@ -29,17 +28,14 @@ def main() -> int:
     tray = SystemTrayIcon()
     picker = PickerWindow(history, settings)
     ocr = OCRCapture()
-    column_select = ColumnSelectHelper()
     hotkeys = HotkeyManager(settings)
 
     tray.on_open_picker = picker.show_near_cursor
     tray.on_open_ocr = ocr.activate
-    tray.on_open_column_select = column_select.activate
     tray.on_secure_mode_changed = monitor.set_paused
 
     hotkeys.picker_triggered.connect(picker.show_near_cursor)
     hotkeys.ocr_triggered.connect(ocr.activate)
-    hotkeys.column_select_triggered.connect(column_select.activate)
     hotkeys.register()
 
     if not SystemTrayIcon.isSystemTrayAvailable():

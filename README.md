@@ -22,8 +22,7 @@ just clip
 | Hotkey | Action |
 |--------|--------|
 | `Ctrl+Alt+V` | Open clipboard history picker |
-| `Ctrl+Alt+G` | OCR screen region — captures text from a drawn selection |
-| `Ctrl+Alt+K` | Column select — OCR captures text from a drawn selection and copies it |
+| `Ctrl+Alt+G` | OCR grab — draw a region to capture text via Tesseract |
 
 Hotkeys and other settings are configurable in `~/.clipboard-manager/settings.json`.
 

@@ -9,7 +9,6 @@ from clipboard_manager.settings import Settings
 class HotkeyManager(QObject):
     picker_triggered: pyqtSignal = pyqtSignal()
     ocr_triggered: pyqtSignal = pyqtSignal()
-    column_select_triggered: pyqtSignal = pyqtSignal()
 
     def __init__(self, settings: Settings, parent: QObject | None = None) -> None:
         super().__init__(parent)
@@ -20,7 +19,6 @@ class HotkeyManager(QObject):
         h = self._settings.hotkeys
         keyboard.add_hotkey(h.picker, self.picker_triggered.emit)
         keyboard.add_hotkey(h.ocr, self.ocr_triggered.emit)
-        keyboard.add_hotkey(h.column_select, self.column_select_triggered.emit)
         self._registered = True
 
     def unregister_all(self) -> None:

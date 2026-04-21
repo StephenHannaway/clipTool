@@ -11,7 +11,6 @@ from pathlib import Path
 class HotkeySettings:
     picker: str = "ctrl+alt+v"
     ocr: str = "ctrl+alt+g"
-    column_select: str = "ctrl+alt+k"
 
 
 @dataclass
@@ -38,9 +37,6 @@ class Settings:
             hotkeys=HotkeySettings(
                 picker=hotkeys_data.get("picker", defaults.hotkeys.picker),
                 ocr=hotkeys_data.get("ocr", defaults.hotkeys.ocr),
-                column_select=hotkeys_data.get(
-                    "column_select", defaults.hotkeys.column_select
-                ),
             ),
             plain_text_strip=data.get("plain_text_strip", defaults.plain_text_strip),
             start_with_windows=data.get(
