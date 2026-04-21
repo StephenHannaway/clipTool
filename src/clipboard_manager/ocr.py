@@ -7,6 +7,8 @@ from PyQt6.QtWidgets import QApplication
 
 from clipboard_manager.overlay import SelectionOverlay
 
+pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+
 
 class OCRCapture(QObject):
     text_captured: pyqtSignal = pyqtSignal(str)
