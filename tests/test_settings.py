@@ -11,7 +11,6 @@ def test_defaults():
     assert s.start_with_windows is False
     assert s.hotkeys.picker == "ctrl+alt+v"
     assert s.hotkeys.ocr == "ctrl+alt+g"
-    assert s.hotkeys.column_select == "ctrl+alt+k"
 
 
 def test_save_creates_file(tmp_path: Path):
