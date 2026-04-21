@@ -42,6 +42,10 @@ def main() -> int:
     hotkeys.column_select_triggered.connect(column_select.activate)
     hotkeys.register()
 
+    if not SystemTrayIcon.isSystemTrayAvailable():
+        print("ERROR: system tray not available", file=sys.stderr)
+        return 1
+
     monitor.start()
     tray.show()
     settings.apply_start_with_windows()
