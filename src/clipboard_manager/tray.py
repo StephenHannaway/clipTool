@@ -31,7 +31,7 @@ class SystemTrayIcon(QSystemTrayIcon):
 
     def _build_menu(self) -> None:
         menu = QMenu()
-        picker_action = QAction("Open Picker\tCtrl+Win+V")
+        picker_action = QAction("Open Picker\tCtrl+Alt+V")
         picker_action.triggered.connect(self._emit_open_picker)
         menu.addAction(picker_action)
         ocr_action = QAction("OCR Grab\tCtrl+Alt+G")

@@ -9,7 +9,7 @@ def test_defaults():
     assert s.history_limit == 500
     assert s.plain_text_strip is True
     assert s.start_with_windows is False
-    assert s.hotkeys.picker == "ctrl+win+v"
+    assert s.hotkeys.picker == "ctrl+alt+v"
     assert s.hotkeys.ocr == "ctrl+alt+g"
     assert s.hotkeys.column_select == "ctrl+alt+k"
 
@@ -41,7 +41,7 @@ def test_load_partial_file_fills_defaults(tmp_path: Path):
     s = Settings.load(path)
     assert s.history_limit == 100
     assert s.plain_text_strip is True
-    assert s.hotkeys.picker == "ctrl+win+v"
+    assert s.hotkeys.picker == "ctrl+alt+v"
 
 
 def test_save_creates_parent_dirs(tmp_path: Path):
