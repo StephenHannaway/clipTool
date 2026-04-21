@@ -28,11 +28,12 @@ class ColumnSelectHelper(QObject):
         QTimer.singleShot(150, lambda: self._do_drag(x1, y1, x2, y2))
 
     def _do_drag(self, x1: int, y1: int, x2: int, y2: int) -> None:
-        pyautogui.keyDown("alt")
         pyautogui.moveTo(x1, y1)
+        pyautogui.keyDown("alt")
         pyautogui.mouseDown()
-        pyautogui.moveTo(x2, y2, duration=0.1)
+        pyautogui.moveTo(x2, y2, duration=0.15)
         pyautogui.mouseUp()
         pyautogui.keyUp("alt")
+        pyautogui.press("escape")  # dismiss menu focus triggered by Alt release
         pyautogui.hotkey("ctrl", "c")
         self.selection_done.emit()
