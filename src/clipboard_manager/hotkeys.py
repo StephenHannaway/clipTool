@@ -1,27 +1,26 @@
 from __future__ import annotations
 
-from collections.abc import Callable
-
 import keyboard
+from PyQt6.QtCore import QObject, pyqtSignal
 
 from clipboard_manager.settings import Settings
 
 
-class HotkeyManager:
-    def __init__(self, settings: Settings) -> None:
+class HotkeyManager(QObject):
+    picker_triggered: pyqtSignal = pyqtSignal()
+    ocr_triggered: pyqtSignal = pyqtSignal()
+    column_select_triggered: pyqtSignal = pyqtSignal()
+
+    def __init__(self, settings: Settings, parent: QObject | None = None) -> None:
+        super().__init__(parent)
         self._settings = settings
         self._registered = False
 
-    def register(
-        self,
-        on_picker: Callable[[], None],
-        on_ocr: Callable[[], None],
-        on_column_select: Callable[[], None],
-    ) -> None:
+    def register(self) -> None:
         h = self._settings.hotkeys
-        keyboard.add_hotkey(h.picker, on_picker)
-        keyboard.add_hotkey(h.ocr, on_ocr)
-        keyboard.add_hotkey(h.column_select, on_column_select)
+        keyboard.add_hotkey(h.picker, self.picker_triggered.emit)
+        keyboard.add_hotkey(h.ocr, self.ocr_triggered.emit)
+        keyboard.add_hotkey(h.column_select, self.column_select_triggered.emit)
         self._registered = True
 
     def unregister_all(self) -> None:

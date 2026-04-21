@@ -37,11 +37,10 @@ def main() -> int:
     tray.on_open_column_select = column_select.activate
     tray.on_secure_mode_changed = monitor.set_paused
 
-    hotkeys.register(
-        on_picker=picker.show_near_cursor,
-        on_ocr=ocr.activate,
-        on_column_select=column_select.activate,
-    )
+    hotkeys.picker_triggered.connect(picker.show_near_cursor)
+    hotkeys.ocr_triggered.connect(ocr.activate)
+    hotkeys.column_select_triggered.connect(column_select.activate)
+    hotkeys.register()
 
     monitor.start()
     tray.show()

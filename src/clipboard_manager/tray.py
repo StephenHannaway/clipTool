@@ -2,14 +2,26 @@ from __future__ import annotations
 
 from collections.abc import Callable
 
-from PyQt6.QtGui import QAction, QIcon
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QAction, QColor, QIcon, QPainter, QPixmap
 from PyQt6.QtWidgets import QApplication, QMenu, QSystemTrayIcon
+
+
+def _make_icon() -> QIcon:
+    px = QPixmap(16, 16)
+    px.fill(Qt.GlobalColor.transparent)
+    p = QPainter(px)
+    p.setRenderHint(QPainter.RenderHint.Antialiasing)
+    p.setBrush(QColor(100, 150, 255))
+    p.setPen(Qt.PenStyle.NoPen)
+    p.drawRoundedRect(1, 1, 14, 14, 3, 3)
+    p.end()
+    return QIcon(px)
 
 
 class SystemTrayIcon(QSystemTrayIcon):
     def __init__(self, parent: QSystemTrayIcon | None = None) -> None:
-        icon = QIcon.fromTheme("edit-paste", QIcon())
-        super().__init__(icon, parent)
+        super().__init__(_make_icon(), parent)
         self.on_open_picker: Callable[[], None] | None = None
         self.on_open_ocr: Callable[[], None] | None = None
         self.on_open_column_select: Callable[[], None] | None = None
