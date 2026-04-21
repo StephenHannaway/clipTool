@@ -16,7 +16,7 @@ uv sync
 ## Usage
 
 ```bash
-just run
+just clip
 ```
 
 | Hotkey | Action |
@@ -30,7 +30,9 @@ Hotkeys and other settings are configurable in `~/.clipboard-manager/settings.js
 ## Development
 
 ```bash
-just check   # lint + format check + type check
-just test    # run tests
-just fmt     # auto-format
+just check     # lint + format check + type check (CI gate)
+just test      # run tests
+just test-cov  # run tests with coverage report
+just fmt       # auto-format
+just clean     # remove build/cache artifacts
 ```
