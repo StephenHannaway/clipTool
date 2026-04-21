@@ -10,8 +10,8 @@ from pathlib import Path
 @dataclass
 class HotkeySettings:
     picker: str = "ctrl+win+v"
-    ocr: str = "ctrl+win+shift+o"
-    column_select: str = "ctrl+win+shift+b"
+    ocr: str = "ctrl+alt+g"
+    column_select: str = "ctrl+alt+k"
 
 
 @dataclass
