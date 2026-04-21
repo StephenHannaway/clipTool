@@ -7,7 +7,6 @@ requires-python = ">=3.12"
 dependencies = [
     "keyboard>=0.13",
     "pillow>=10.0",
-    "pyautogui>=0.9",
     "pyqt6>=6.7",
     "pytesseract>=0.3",
 ]
@@ -54,5 +53,5 @@ dev = [
 ]
 
 [[tool.mypy.overrides]]
-module = ["keyboard", "pyautogui", "pytesseract"]
+module = ["keyboard", "pytesseract"]
 ignore_missing_imports = true

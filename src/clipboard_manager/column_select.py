@@ -1,14 +1,17 @@
 from __future__ import annotations
 
-import pyautogui
-from PyQt6.QtCore import QObject, QRect, QTimer, pyqtSignal
+import pytesseract
+from PIL import ImageGrab
+from PyQt6.QtCore import QObject, QRect, pyqtSignal
 from PyQt6.QtWidgets import QApplication
 
 from clipboard_manager.overlay import SelectionOverlay
 
+pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+
 
 class ColumnSelectHelper(QObject):
-    selection_done: pyqtSignal = pyqtSignal()
+    text_captured: pyqtSignal = pyqtSignal(str)
 
     def __init__(self, parent: QObject | None = None) -> None:
         super().__init__(parent)
@@ -21,19 +24,20 @@ class ColumnSelectHelper(QObject):
     def _on_selection(self, rect: QRect) -> None:
         screen = QApplication.primaryScreen()
         ratio = screen.devicePixelRatio() if screen else 1.0
-        x1 = int(rect.left() * ratio)
-        y1 = int(rect.top() * ratio)
-        x2 = int(rect.right() * ratio)
-        y2 = int(rect.bottom() * ratio)
-        QTimer.singleShot(150, lambda: self._do_drag(x1, y1, x2, y2))
-
-    def _do_drag(self, x1: int, y1: int, x2: int, y2: int) -> None:
-        pyautogui.moveTo(x1, y1)
-        pyautogui.keyDown("alt")
-        pyautogui.mouseDown()
-        pyautogui.moveTo(x2, y2, duration=0.15)
-        pyautogui.mouseUp()
-        pyautogui.keyUp("alt")
-        pyautogui.press("escape")  # dismiss menu focus triggered by Alt release
-        pyautogui.hotkey("ctrl", "c")
-        self.selection_done.emit()
+        x, y = rect.x(), rect.y()
+        w, h = rect.width(), rect.height()
+        img = ImageGrab.grab(
+            bbox=(
+                int(x * ratio),
+                int(y * ratio),
+                int((x + w) * ratio),
+                int((y + h) * ratio),
+            )
+        )
+        # PSM 6: "Assume a single uniform block of text" — good for columns
+        text: str = pytesseract.image_to_string(img, config="--psm 6").strip()
+        if text:
+            clipboard = QApplication.clipboard()
+            if clipboard is not None:
+                clipboard.setText(text)
+            self.text_captured.emit(text)
